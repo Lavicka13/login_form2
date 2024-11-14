@@ -16,7 +16,6 @@ import {
 import { useForm } from '@mantine/form';
 import { IconCheck, IconX } from '@tabler/icons-react';
 
-
 function LoginForm() {
   const form = useForm({
     mode: 'uncontrolled',
@@ -40,7 +39,7 @@ function LoginForm() {
     console.log(values);
 
     // Wenn alles gut geht, zeige die Erfolg-Benachrichtigung
-    setIsError(false);
+    setIsError(false); // Hier setzen wir isError auf false, um die Erfolgsmeldung zu zeigen
     setNotificationVisible(true);
 
     // Benachrichtigung nach 3 Sekunden automatisch ausblenden
@@ -50,7 +49,7 @@ function LoginForm() {
   };
 
   return (
-    <Container size={420} my={40}>
+    <Container size={420} my={40} style={{ position: 'relative' }}>
       <Title align="center" mb="xs">Welcome Back</Title>
       <Text color="dimmed" size="sm" align="center" mt={5} mb="xl">
         Do not have an account yet?{" "}
@@ -59,17 +58,7 @@ function LoginForm() {
         </Anchor>
       </Text>
 
-      {/* Benachrichtigung wird hier angezeigt */}
-      {notificationVisible && (
-        <Notification
-          icon={isError ? <IconX style={{ width: rem(20), height: rem(20) }} /> : <IconCheck style={{ width: rem(20), height: rem(20) }} />}
-          color={isError ? 'red' : 'teal'}
-          title={isError ? 'Bummer!' : 'Login Successful!'}
-          mt="md"
-        >
-          {isError ? 'Something went wrong' : 'You have successfully logged in.'}
-        </Notification>
-      )}
+      
 
       <Paper withBorder shadow="md" radius="lg">
         <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
@@ -113,6 +102,24 @@ function LoginForm() {
             </Button>
           </form>
         </div>
+        {/* Benachrichtigung wird hier angezeigt, überlappend zum Formular */}
+      {notificationVisible && (
+        <Notification
+          icon={isError ? <IconX style={{ width: rem(20), height: rem(20) }} /> : <IconCheck style={{ width: rem(20), height: rem(20) }} />}
+          color={isError ? 'red' : 'teal'}
+          title={isError ? 'Bummer!' : 'Login Successful!'}
+          style={{
+            position: 'absolute',
+            top: '450px', // Setzt die Benachrichtigung direkt oben an
+            left: '50%',
+            width: '50vw',
+            transform: 'translateX(-50%)',
+            zIndex: 1000, // Stellt sicher, dass die Benachrichtigung über dem Formular schwebt
+          }}
+        >
+          {isError ? 'Something went wrong' : 'You have successfully logged in.'}
+        </Notification>
+      )}
       </Paper>
     </Container>
   );
